@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', 'Controller@login')->name('user.login');
+Route::post('login', 'DashboardController@auth')->name('user.auth');
+Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
