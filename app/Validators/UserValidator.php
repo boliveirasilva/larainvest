@@ -18,7 +18,18 @@ class UserValidator extends LaravelValidator
      * @var array
      */
     protected $rules = [
-        ValidatorInterface::RULE_CREATE => [],
+        ValidatorInterface::RULE_CREATE => [
+            'cpf'           => 'required|string|size:11',
+            'name'          => 'required',
+            'phone'         => 'required',
+            'email'         => 'required|unique:users,email',
+            // 'birth'         => '',
+            // 'gender'        => '',
+            // 'notes'         => '',
+            // 'password'      => '',
+            // 'status'        => '',
+            // 'permission'    => ''
+        ],
         ValidatorInterface::RULE_UPDATE => [],
     ];
 }

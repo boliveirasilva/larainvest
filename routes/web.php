@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\UsersController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +20,7 @@ Route::get('/', function () {
 Route::get('login', 'Controller@login')->name('user.login');
 Route::post('login', 'DashboardController@auth')->name('user.auth');
 Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
+
+// Route::get('user', 'UsersController@index')->name('user.index');
+Route::resource('user', 'UsersController');
+Route::resource('institution', 'InstitutionsController');

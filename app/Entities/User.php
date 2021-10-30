@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,5 +33,20 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = env('PASSWORD_HASH') ? bcrypt($value) : $value;
+    }
+
+    public function getCpfAttribute()
+    {
+        return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $this->attributes['cpf']);
+    }
+
+    public function getPhoneAttribute()
+    {
+        return preg_replace('/(\d{2})?(\d{4,5})?(\d{4})/', '($1) $2-$3', $this->attributes['phone']);
+    }
+
+    public function getBirthAttribute()
+    {
+        return Carbon::parse($this->attributes['birth'])->format('d/m/Y');
     }
 }
