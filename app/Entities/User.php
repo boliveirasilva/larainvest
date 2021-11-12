@@ -35,18 +35,23 @@ class User extends Authenticatable
         $this->attributes['password'] = env('PASSWORD_HASH') ? bcrypt($value) : $value;
     }
 
-    public function getCpfAttribute()
+    public function getFormattedCpfAttribute()
     {
         return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $this->attributes['cpf']);
     }
 
-    public function getPhoneAttribute()
+    public function getFormattedPhoneAttribute()
     {
         return preg_replace('/(\d{2})?(\d{4,5})?(\d{4})/', '($1) $2-$3', $this->attributes['phone']);
     }
 
-    public function getBirthAttribute()
+    public function getFormattedBirthAttribute()
     {
         return Carbon::parse($this->attributes['birth'])->format('d/m/Y');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'user_groups');
     }
 }

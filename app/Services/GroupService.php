@@ -2,19 +2,19 @@
 
 namespace App\Services;
 
-use App\Repositories\InstitutionRepository;
-use App\Validators\InstitutionValidator;
-use Illuminate\Database\QueryException;
-use Prettus\Validator\Contracts\ValidatorInterface;
+use App\Repositories\GroupRepository;
+use App\Validators\GroupValidator;
 use Exception;
+use Illuminate\Database\QueryException;
 use Prettus\Validator\Exceptions\ValidatorException;
+use Prettus\Validator\Contracts\ValidatorInterface;
 
-class InstitutionService
+class GroupService
 {
     private $repository;
     private $validator;
 
-    public function __construct(InstitutionRepository $repository, InstitutionValidator $validator)
+    public function __construct(GroupRepository $repository, GroupValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -26,11 +26,41 @@ class InstitutionService
 
         try {
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
-            $institution = $this->repository->create($data);
+            $group = $this->repository->create($data);
 
             $result['success'] = true;
-            $result['messages'] = 'Instituição cadastrada.';
-            $result['data'] = $institution;
+            $result['messages'] = 'Grupo cadastrado.';
+            $result['data'] = $group;
+        } catch (ValidatorException $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessageBag()->getMessages();
+
+            $result['flash_message'] = '<ul>';
+            foreach ($result['messages'] as $item => $message) {
+                $result['flash_message'] .= sprintf('<li>%s: %s</li>', $item, implode('|', $message));
+            }
+            $result['flash_message'] .= '</ul>';
+        } catch (Exception $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessage();
+        } finally {
+            return $result;
+        }
+    }
+
+    public function userStore($group_id, $data)
+    {
+        $result = ['success' => false, 'messages' => 'Erro de execução'];
+
+        try {
+            $group = $this->repository->find($group_id);
+            $user_id = $data['user_id'];
+
+            $group->users()->attach($user_id);
+
+            $result['success'] = true;
+            $result['messages'] = 'Usuário relacionado com sucesso!';
+            $result['data'] = $group;
         } catch (ValidatorException $ex) {
             // Tratamento de erro | atualização do retorno se necessário.
             $result['messages'] = $ex->getMessageBag()->getMessages();
@@ -56,7 +86,7 @@ class InstitutionService
             $this->repository->destroy($institution_id);
 
             $result['success'] = true;
-            $result['messages'] = 'Instituição removida.';
+            $result['messages'] = 'Grupo removido.';
             $result['data'] = null;
         } catch (ValidatorException $ex) {
             // Tratamento de erro | atualização do retorno se necessário.

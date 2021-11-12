@@ -21,6 +21,9 @@ Route::get('login', 'Controller@login')->name('user.login');
 Route::post('login', 'DashboardController@auth')->name('user.auth');
 Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
 
-// Route::get('user', 'UsersController@index')->name('user.index');
 Route::resource('user', 'UsersController');
 Route::resource('institution', 'InstitutionsController');
+Route::resource('group', 'GroupsController');
+
+Route::post('group/{group_id}/user', 'GroupsController@userStore')->name('group.user.store');
+// Route::get('user', 'UsersController@index')->name('user.index');

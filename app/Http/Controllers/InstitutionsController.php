@@ -11,7 +11,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\InstitutionCreateRequest;
 use App\Http\Requests\InstitutionUpdateRequest;
 use App\Repositories\InstitutionRepository;
-use App\Validators\InstitutionValidator;
+
 
 /**
  * Class InstitutionsController.
@@ -30,7 +30,7 @@ class InstitutionsController extends Controller
     /**
      * InstitutionsController constructor.
      *
-     * @param InstitutionRepository $repository
+     * @param InstitutionRepository    $repository
      * @param InstitutionService $service
      */
     public function __construct(InstitutionRepository $repository, InstitutionService $service)
@@ -81,13 +81,6 @@ class InstitutionsController extends Controller
     public function show($id)
     {
         $institution = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $institution,
-            ]);
-        }
 
         return view('institutions.show', compact('institution'));
     }

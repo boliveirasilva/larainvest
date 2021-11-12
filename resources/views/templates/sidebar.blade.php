@@ -11,7 +11,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('group.index') }}">
                 <i class="fa fa-users"></i><h3>Grupos</h3>
             </a>
         </li>

@@ -4,22 +4,17 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\UserRepository;
-use App\Entities\User;
-use App\Validators\UserValidator;
+use App\Repositories\GroupRepository;
+use App\Entities\Group;
+use App\Validators\GroupValidator;
 
 /**
- * Class UserRepositoryEloquent.
+ * Class GroupRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class UserRepositoryEloquent extends BaseRepository implements UserRepository
+class GroupRepositoryEloquent extends BaseRepository implements GroupRepository
 {
-    public function selectBox($description = 'name', $key = 'id')
-    {
-        return $this->model->pluck($description, $key)->all();
-    }
-
     /**
      * Specify Model class name
      *
@@ -27,7 +22,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     public function model()
     {
-        return User::class;
+        return Group::class;
     }
 
     /**
@@ -38,7 +33,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function validator()
     {
 
-        return UserValidator::class;
+        return GroupValidator::class;
     }
 
 

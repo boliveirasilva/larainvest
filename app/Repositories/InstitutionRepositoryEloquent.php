@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\InstitutionRepository;
 use App\Entities\Institution;
 use App\Validators\InstitutionValidator;
 
@@ -15,6 +14,11 @@ use App\Validators\InstitutionValidator;
  */
 class InstitutionRepositoryEloquent extends BaseRepository implements InstitutionRepository
 {
+    public function selectBox($description = 'name', $key = 'id')
+    {
+        return $this->model->pluck($description, $key)->all();
+    }
+
     /**
      * Specify Model class name
      *
