@@ -115,6 +115,12 @@ form.form-padrao label {
     margin-bottom: 20px;
 }
 
+form.form-padrao label.textarea {
+    width: 98%;
+    height: 100%; /*60px*/
+    margin: 0 20px 20px;
+}
+
 form.form-padrao label:nth-last-of-type(odd) {
     margin-left: 2%;
 }
@@ -127,7 +133,8 @@ form.form-padrao label span {
     padding-bottom: 5px;
 }
 
-form.form-padrao label input {
+form.form-padrao label input,
+form.form-padrao label textarea {
     float: left;
     width: 100%;
     color: #5c5c5c;

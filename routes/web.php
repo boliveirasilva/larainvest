@@ -23,6 +23,7 @@ Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
 
 Route::resource('user', 'UsersController');
 Route::resource('institution', 'InstitutionsController');
+Route::resource('institution.product', 'ProductsController');
 Route::resource('group', 'GroupsController');
 
 Route::post('group/{group_id}/user', 'GroupsController@userStore')->name('group.user.store');
