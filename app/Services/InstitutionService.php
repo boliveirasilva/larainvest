@@ -48,6 +48,34 @@ class InstitutionService
         }
     }
 
+    public function update($data, $id)
+    {
+        $result = ['success' => false, 'messages' => 'Erro de execução'];
+
+        try {
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $institution = $this->repository->update($data, $id);
+
+            $result['success'] = true;
+            $result['messages'] = 'Instituição atualizada.';
+            $result['data'] = $institution;
+        } catch (ValidatorException $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessageBag()->getMessages();
+
+            $result['flash_message'] = '<ul>';
+            foreach ($result['messages'] as $item => $message) {
+                $result['flash_message'] .= sprintf('<li>%s: %s</li>', $item, implode('|', $message));
+            }
+            $result['flash_message'] .= '</ul>';
+        } catch (Exception $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessage();
+        } finally {
+            return $result;
+        }
+    }
+
     public function delete($institution_id)
     {
         $result = ['success' => false, 'messages' => 'Erro de execução'];

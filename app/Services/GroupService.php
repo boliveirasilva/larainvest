@@ -48,6 +48,34 @@ class GroupService
         }
     }
 
+    public function update($data, $id)
+    {
+        $result = ['success' => false, 'messages' => 'Erro de execução'];
+
+        try {
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $group = $this->repository->update($data, $id);
+
+            $result['success'] = true;
+            $result['messages'] = 'Grupo atualizado.';
+            $result['data'] = $group;
+        } catch (ValidatorException $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessageBag()->getMessages();
+
+            $result['flash_message'] = '<ul>';
+            foreach ($result['messages'] as $item => $message) {
+                $result['flash_message'] .= sprintf('<li>%s: %s</li>', $item, implode('|', $message));
+            }
+            $result['flash_message'] .= '</ul>';
+        } catch (Exception $ex) {
+            // Tratamento de erro | atualização do retorno se necessário.
+            $result['messages'] = $ex->getMessage();
+        } finally {
+            return $result;
+        }
+    }
+
     public function userStore($group_id, $data)
     {
         $result = ['success' => false, 'messages' => 'Erro de execução'];

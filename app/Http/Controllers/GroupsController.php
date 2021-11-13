@@ -119,6 +119,11 @@ class GroupsController extends Controller
      */
     public function edit($id)
     {
+        $group = $this->repository->find($id);
+        $users_list = $this->user_repository->selectBox();
+        $institutions_list = $this->institution_repository->selectBox();
+
+        return view('groups.edit', compact('group', 'users_list', 'institutions_list'));
     }
 
     /**
@@ -133,6 +138,13 @@ class GroupsController extends Controller
      */
     public function update(GroupUpdateRequest $request, $id)
     {
+        $request = $this->service->update($request->all(), $id);
+        // $group = ($request['success'] ? $request['data'] : null);
+
+        $flash_message = (empty($request['flash_message']) ? $request['messages'] : $request['flash_message']);
+        session()->flash('flash_message', $flash_message);
+
+        return redirect()->route('group.index');
     }
 
 
