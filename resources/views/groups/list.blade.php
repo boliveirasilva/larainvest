@@ -4,6 +4,7 @@
     <tr>
         <th>#</th>
         <th>Nome do Grupo</th>
+        <th>Total da Pool</th>
         <th>Instituição</th>
         <th>Responsável</th>
         <th>Opções</th>
@@ -14,6 +15,7 @@
         <tr>
             <td>{{ $group->id }}</td>
             <td>{{ $group->name }}</td>
+            <td>R$ {{ number_format($group->pool_value, 2, ',', '.') }}</td>
             <td>{{ $group->institution->name }}</td>
             <td>{{ $group->owner->name }}</td>
             <td>
@@ -25,7 +27,7 @@
             </td>
         </tr>
     @empty
-        <tr><td colspan="3"><div class="no-registration">Nenhum registro encontrado!</div></td></tr>
+        <tr class="empty-table"><td colspan="3">Nenhum registro encontrado!</td></tr>
     @endforelse
     </tbody>
 </table>

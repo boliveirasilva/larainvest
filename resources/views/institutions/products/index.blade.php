@@ -40,9 +40,7 @@
                 </td>
             </tr>
             @empty
-            <tr>
-                <td colspan="5" style="text-align: center; color: red;">Nenhum produto cadastrado</td>
-            </tr>
+            <tr class="empty-table"><td colspan="5">Nenhum produto cadastrado</td></tr>
             @endforelse
         </tbody>
     </table>

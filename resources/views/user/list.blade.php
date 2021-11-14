@@ -33,7 +33,7 @@
             </td>
         </tr>
     @empty
-        <tr><td colspan="8">Nenhum usuário encontrado!</td></tr>
+        <tr class="empty-table"><td colspan="8">Nenhum usuário encontrado!</td></tr>
     @endforelse
     </tbody>
 </table>

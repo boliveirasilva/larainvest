@@ -34,7 +34,7 @@
             </td>
         </tr>
         @empty
-        <tr><td colspan="3"><div class="no-registration">Nenhum registro encontrado!</div></td></tr>
+        <tr class="empty-table"><td colspan="3">Nenhum registro encontrado!</td></tr>
         @endforelse
         </tbody>
     </table>

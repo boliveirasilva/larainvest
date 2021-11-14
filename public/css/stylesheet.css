@@ -220,6 +220,7 @@ form.form-padrao label.submit input {
     line-height: 15px;
 }
 
+.empty-table td,
 .no-registration {
     width: 100%;
     text-align: center;
