@@ -17,13 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login', 'Controller@login')->name('user.login');
-Route::post('login', 'DashboardController@auth')->name('user.auth');
+Route::get('login', 'Controller@login')->name('login');
+Route::post('login', 'Controller@auth')->name('user.auth');
+Route::get('logout', 'Controller@logout')->name('logout');
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
-    Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
-
+    // Route::get('dashboard', 'DashboardController@index')->name('user.dashboard');
     Route::get('user/movement', 'MovementsController@index')->name('movement.index');
     Route::get('movement/statement', 'MovementsController@statement')->name('movement.statement');
     Route::get('movement/deposit', 'MovementsController@deposit')->name('movement.deposit');
@@ -38,4 +38,4 @@ Route::post('login', 'DashboardController@auth')->name('user.auth');
 
     Route::post('group/{group_id}/user', 'GroupsController@userStore')->name('group.user.store');
     // Route::get('user', 'UsersController@index')->name('user.index');
-// });
+});

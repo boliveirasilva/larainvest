@@ -37,32 +37,4 @@ class DashboardController extends Controller
         // dd(Auth::check() ? 'Usuário Logado!' : 'Acesso de Visitante...', Auth::user());
         return view('user.dashboard');
     }
-
-    public function auth(Request $request)
-    {
-        $data = [
-            'email' => $request->get('username'),
-            'password' => $request->get('password')
-        ];
-
-        try {
-            if (env('PASSWORD_HASH')) {
-                $user = Auth::attempt($data);
-                if (!$user) throw new Exception("Credencial inválida!");
-
-            } else {
-                $user = $this->repository->findWhere(['email' => $data['email']])->first();
-                if (!$user) throw new Exception('O e-mail não foi encontrado!');
-
-                if ($user->password !== $data['password']) throw new Exception('Senha inválida');
-
-                Auth::login($user);
-            }
-
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
-
-        return redirect()->route('user.dashboard');
-    }
 }
